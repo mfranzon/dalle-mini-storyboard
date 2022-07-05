@@ -1,26 +1,44 @@
-# DALL-E Mini Python App
+# DALL-E StoryBoard
 
 A Streamlit app based on the [DALL-E Playground](https://github.com/saharmor/dalle-playground), with the frontent part also in Python.
 
-## Watch the Tutorial
-  [![Alt text](https://img.youtube.com/vi/fRa2rmDvOCY/hqdefault.jpg)](https://youtu.be/fRa2rmDvOCY)
+Load a story and create images for each chapter. Create your storyboard from text using DALL-E!
 
-## Installation
+## Requirements
 
 ```console
-$ pip install requests streamlit websockets pyaudio
+$ pip install jupyterlab requests streamlit 
 ```
 
 ## Backend:
-Go to [DALL-E Playground](https://github.com/saharmor/dalle-playground), run the Google Colab, and copy the backend url into [dalle.py](dalle.py).
+Go to [DALL-E Playground](https://github.com/saharmor/dalle-playground), run the Google Colab or if you have enough memory or a GPU available you can also run it locally. 
+
+Copy and paste this code into a Jupyter cell and run it.
+
+```python
+from threading import Thread
+
+dalle_model = 'Mini'
+app_port = 8000
+
+def app():
+  print(f"Selected DALL-E Model - [{dalle_model}]")
+  !python dalle-playground/backend/app.py --port {app_port} --model_version {dalle_model} --save_to_disk true --img_format jpeg --output_dir generations
+
+if __name__ == '__main__':
+    t1 = Thread(target = app)
+    a = t1.start()
+```
+Then copy the backend url into [dalle.py](dalle.py).
 
 ## Frontend
 
-1. Grab an API Token from [AssemblyAI](https://www.assemblyai.com) and paste it into [configure.py](configure.py).
-2. Run
+To run the streamlit application: 
 
 ```console
 $ streamlit run main.py
 ```
 
-Note: If you don't want to use speech recognition, use the [no-speech-rec/main.py](no-speech-rec/main.py) file instead.
+## Input file
+
+The input file is a .txt in which each chapter you want to rappresent as image is separated from the other with `!!!` like the example [file](test.txt)

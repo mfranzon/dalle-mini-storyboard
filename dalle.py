@@ -1,8 +1,9 @@
 import requests
 import base64
 import streamlit as st
+from devtools import debug
 
-URL = "https://horrible-mole-67.loca.lt"
+URL = "http://127.0.0.1:8000"
 headers = {'Bypass-Tunnel-Reminder': "go",
            'mode': 'no-cors'}
 
@@ -12,20 +13,23 @@ def check_if_valid_backend(url):
         return resp.status_code == 200
     except requests.exceptions.Timeout:
         return False
-    
-def call_dalle(url, text, num_images=1):
-    data = {"text": text, "num_images": num_images}
+
+def call_dalle(url, chap, num_images=1):
+    data = {"text": chap[0]["summary_text"], "num_images": num_images}
     resp = requests.post(url + "/dalle", headers=headers, json=data)
     if resp.status_code == 200:
         return resp
-    
-def create_and_show_images(text, num_images):
+ 
+def create_and_show_images(chap_sum, num_images):
     valid = check_if_valid_backend(URL)
     if not valid:
         st.write("Backend service is not running")
     else:
-        resp = call_dalle(URL, text, num_images)
-        if resp is not None:
-            for data in resp.json():
-                img_data = base64.b64decode(data)
-                st.image(img_data)
+        for ind, chap in enumerate(chap_sum):
+            resp = call_dalle(URL, chap, num_images)
+            if resp is not None:
+                #debug(resp.json())
+                for data in resp.json()['generatedImgs']:
+                    img_data = base64.b64decode(data)
+                    st.write(f"Chapter {ind}")
+                    st.image(img_data)
