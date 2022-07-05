@@ -13,7 +13,10 @@ $ pip install jupyterlab requests streamlit
 ## Backend:
 Go to [DALL-E Playground](https://github.com/saharmor/dalle-playground), run the Google Colab or if you have enough memory or a GPU available you can also run it locally. 
 
-Copy and paste this code into a Jupyter cell and run it.
+To have it locally: 
+- clone the above repo
+- install the requirements
+- run this code into a Jupyter cell
 
 ```python
 from threading import Thread
