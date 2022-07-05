@@ -2,7 +2,9 @@
 
 A Streamlit app based on the [DALL-E Playground](https://github.com/saharmor/dalle-playground), with the frontent part also in Python.
 
-Load a story and create images for each chapter. Create your storyboard from text using DALL-E!
+Load a story and create images for each chapter. A simple summarization method is implemented in [summary.py](summary.py). If a chapter is greater than 15 words it will be summarize using `"sshleifer/distilbart-cnn-12-6"`.
+
+Create your storyboard from text using DALL-E!
 
 ## Requirements
 
