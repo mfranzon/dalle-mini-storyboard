@@ -15,7 +15,7 @@ if uploaded_file is not None:
 
     text = stringio.read()
 
-num_images = st.slider("How many images?", 1, 6)
+num_images = st.slider("How many images?", 1, 4)
 
 ok = st.button("GO!")
 

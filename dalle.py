@@ -7,6 +7,8 @@ URL = "http://127.0.0.1:8000"
 headers = {'Bypass-Tunnel-Reminder': "go",
            'mode': 'no-cors'}
 
+
+
 def check_if_valid_backend(url):
     try:
         resp = requests.get(url, timeout=5, headers=headers)
@@ -26,10 +28,12 @@ def create_and_show_images(chap_sum, num_images):
         st.write("Backend service is not running")
     else:
         for ind, chap in enumerate(chap_sum):
+            images_list = []
             resp = call_dalle(URL, chap, num_images)
             if resp is not None:
                 #debug(resp.json())
+                st.write(f"Chapter {ind}")
                 for data in resp.json()['generatedImgs']:
                     img_data = base64.b64decode(data)
-                    st.write(f"Chapter {ind}")
-                    st.image(img_data)
+                    images_list.append(img_data)
+                st.image(images_list, width=300)
